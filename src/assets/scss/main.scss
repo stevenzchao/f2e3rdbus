@@ -1,0 +1,8 @@
+//引入於 引入於個別 Component: 按照需求引入，通常只有幾個 component 需要使用。因此不考慮全局。
+//引入於 main.js & app.vue: 只能吃的到CSS 為全局CSS 吃不到變數
+//引入於 vue.config.js 共享 SCSS 資源。適合由此引入全局想共用的 SCSS 資源，例如變數、mixin 等。
+$mainColor:#cd6798;
+
+h1{
+    color:blue;
+}
