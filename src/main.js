@@ -7,6 +7,7 @@ import VueAxios from 'vue-axios'
 import 'jquery';
 import 'bootstrap';
 import 'popper.js';
+
 // import "@/assets/scss/main.scss"
 
 Vue.config.productionTip = false;
