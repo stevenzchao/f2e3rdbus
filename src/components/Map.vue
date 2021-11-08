@@ -46,6 +46,54 @@ import jsSHA from "jssha";
 console.log(L);
 let osmMap = {};
 
+const osm = {
+//   addMapMarker(x, y, item) {
+//     const icon = item.mask_adult || item.mask_child ? icons.green : icons.grey;
+//     L.marker([y, x], {
+//       icon,
+//     }).addTo(osmMap).bindPopup(`<strong>${item.name}</strong> <br>
+//     口罩剩餘：<strong>成人 - ${
+//       item.mask_adult ? `${item.mask_adult} 個` : "未取得資料"
+//     }/ 兒童 - ${
+//       item.mask_child ? `${item.mask_child} 個` : "未取得資料"
+//     }</strong><br>
+//     地址: <a href="https://www.google.com.tw/maps/place/${
+//       item.address
+//     }" target="_blank">${item.address}</a><br>
+//     電話: ${item.phone}<br>
+//     <small>最後更新時間: ${item.updated}</small>`);
+//   },
+  removeMapMarker() {
+    osmMap.eachLayer((layer) => {
+      if (layer instanceof L.Marker) {
+        osmMap.removeLayer(layer);
+      }
+    });
+  },
+//   penTo(x, y, item) {
+//     const icon = item.mask_adult || item.mask_child ? icons.green : icons.grey;
+//     osmMap.panTo(new L.LatLng(y, x));
+//     L.marker([y, x], {
+//       icon,
+//     })
+//       .addTo(osmMap)
+//       .bindPopup(
+//         `<strong>${item.name}</strong> <br>
+//     口罩剩餘：<strong>成人 - ${
+//       item.mask_adult ? `${item.mask_adult} 個` : "未取得資料"
+//     }/ 兒童 - ${
+//           item.mask_child ? `${item.mask_child} 個` : "未取得資料"
+//         }</strong><br>
+//     地址: <a href="https://www.google.com.tw/maps/place/${
+//       item.address
+//     }" target="_blank">${item.address}</a><br>
+//     電話: ${item.phone}<br>
+//     <small>最後更新時間: ${item.updated}</small>`
+//       )
+//       .openPopup();
+//   },
+};
+
 //綠色的icon 圖標
 var greenIcon = new L.Icon({
   iconUrl:
@@ -68,6 +116,9 @@ export default {
     };
   },
   methods: {
+    removeMarker() {
+      osm.removeMapMarker();
+    },
     getAuthorizationHeader() {
       //  填入自己 ID、KEY 開始
       let AppID = "FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF";
@@ -90,18 +141,7 @@ export default {
       //清除地圖上的標記
       if (this.data != "") {
         console.log("in here!!!!!!!!!!!!!");
-        let layers = [];
-        for (let i = 0;i< this.data[0].Stops.length  ; i++) {
-          var layer = new L.marker([
-            this.data[0].Stops[i].StopPosition.PositionLat,
-            this.data[0].Stops[i].StopPosition.PositionLon,
-          ]);
-          console.log("layer",layer)
-          layers.push(layer);
-        }
-        var myGroup = L.layerGroup(layers);
-        osmMap.addLayer(myGroup);
-        myGroup.clearLayers();
+         this.removeMarker();
       }
 
       //搜尋公車路線的axios 方法
@@ -143,6 +183,7 @@ export default {
     }).addTo(osmMap);
   },
 };
+
 </script>
 
 
